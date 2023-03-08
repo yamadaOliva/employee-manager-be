@@ -1,5 +1,6 @@
 import  express  from "express";
 import  homeController  from "../controller/homeController";
+import  userController  from "../controller/userController";
 const router = express.Router();
 /**
  * 
@@ -10,6 +11,7 @@ const initWebRoutes = (app) => {
     router.get("/about",(req, res) => {
         return res.send("about");
     });
+    router.get("/user", userController.testUser)
     return app.use("/", router);
 }
 
