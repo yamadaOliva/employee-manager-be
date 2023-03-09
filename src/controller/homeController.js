@@ -4,4 +4,5 @@ const helloAction = (req,res) => {
 
 module.exports = {
     helloAction
+     
 }
