@@ -13,6 +13,7 @@
     <title>Document</title>
 </head>
 <body>
+    <%=JSON.stringify(userList)%>
     <h1>Nguyen Viet Anh</h1>
     <form method="POST" action="/users/create-user" >
       <div class = "container">
@@ -31,7 +32,44 @@
             <input type="text" class="form-control" id="name" name="userName" >
           </div>
           <button type="submit" class="btn btn-primary">Submit</button>
+          <div>
+            <table class="table table-hover mt-3">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">User</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                  <td>
+                    <button type="button" class="btn btn-primary">Edit</button>
+                    <button type="button" class="btn btn-danger">Delete</button>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>Jacob</td>
+                  <td>Thornton</td>
+                    <td>
+                      <button type="button" class="btn btn-primary">Edit</button>
+                      <button type="button" class="btn btn-danger">Delete</button>
+                    </td>
+                </tr>
+                <tr>
+                  <th scope="row">3</th>
+                  <td >Larry the Bird</td>
+                  <td>@twitter</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </form>
       </div>
+      
 </body>
 </html>

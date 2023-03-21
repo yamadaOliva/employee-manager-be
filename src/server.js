@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 8080;
 // config view engine
 configViewEngine(app);
 
-//body-parser
+//body-parser use to get data from form
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
