@@ -18,7 +18,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 initWebRoutes(app);
 
 
-
 app.listen(PORT,(err)=>{
     console.log("Server is running on port: " + PORT);
 });

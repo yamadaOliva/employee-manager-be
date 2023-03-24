@@ -6,16 +6,36 @@ const testUser =async (req, res) => {
   return res.render("user",{userList});
 };
 
-const handleCreateNewUser = (req, res) => {
+const handleCreateNewUser = async(req, res) => {
   console.log(req.body);
   let email = req.body.emailName;
   let password = req.body.passwordName;
   let userName = req.body.userName;
   userService.createNewUser(email, password, userName);
-  
- return res.send("create new user");
+ return res.redirect("/user");
+};
+
+const handleDeleteUser = async (req, res) => {
+  let id = req.params.id;
+  await userService.deleteUser(id);
+  return res.redirect("/user");
+};
+
+const handleUpdateUser = async (req, res) => {
+  return res.render("user-update",{id: req.params.id});
+};
+
+const handleUpdateUser1 = async (req, res) => {
+  let id = req.params.id;
+  console.log(req.body);
+  let userName = req.body.userName;
+  await userService.updateUser(userName, id);
+  return res.redirect("/user");
 };
 module.exports = {
   testUser,
   handleCreateNewUser,
+  handleDeleteUser,
+  handleUpdateUser,
+  handleUpdateUser1
 };

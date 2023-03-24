@@ -13,7 +13,6 @@
     <title>Document</title>
 </head>
 <body>
-    <%=JSON.stringify(userList)%>
     <h1>Nguyen Viet Anh</h1>
     <form method="POST" action="/users/create-user" >
       <div class = "container">
@@ -42,29 +41,17 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>
-                    <button type="button" class="btn btn-primary">Edit</button>
-                    <button type="button" class="btn btn-danger">Delete</button>
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
+                <% userList.forEach((user, index) => { %>
+                  <tr>
+                    <th scope="row"><%= index + 1 %></th>
+                    <td><%= user.email %></td>
+                    <td><%= user.username %></td>
                     <td>
-                      <button type="button" class="btn btn-primary">Edit</button>
-                      <button type="button" class="btn btn-danger">Delete</button>
+                      <a href="/users/edit/<%= user.id %>" class="btn btn-primary">Edit</a>
+                      <a href="/users/delete/<%= user.id %>" class="btn btn-danger">Delete</a>
                     </td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td >Larry the Bird</td>
-                  <td>@twitter</td>
-                </tr>
+                  </tr>
+                <% }) %>
               </tbody>
             </table>
           </div>
