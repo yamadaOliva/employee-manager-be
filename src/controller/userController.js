@@ -2,12 +2,10 @@ import userService from "../services/userService.js";
 
 const testUser =async (req, res) => {
   let userList = await userService.getListUsers();
-  console.log(userList);
   return res.render("user",{userList});
 };
 
 const handleCreateNewUser = async(req, res) => {
-  console.log(req.body);
   let email = req.body.emailName;
   let password = req.body.passwordName;
   let userName = req.body.userName;
@@ -27,7 +25,6 @@ const handleUpdateUser = async (req, res) => {
 
 const handleUpdateUser1 = async (req, res) => {
   let id = req.params.id;
-  console.log(req.body);
   let userName = req.body.userName;
   await userService.updateUser(userName, id);
   return res.redirect("/user");
