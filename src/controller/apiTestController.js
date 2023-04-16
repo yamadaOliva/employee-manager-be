@@ -15,7 +15,6 @@ const registerHandle = async (req, res) => {
             });
         }else{
             const code = await authServices.registerService(req.body);
-            console.log(code);
             return res.status(200).json(code);
         }
         
@@ -23,7 +22,19 @@ const registerHandle = async (req, res) => {
         console.log(err);
     }
 }
+
+const loginHandle = async (req, res) => {
+    try{
+    console.log(req.body);
+       const reponse = await  authServices.loginService(req.body);
+       console.log("ress ::=>>>",reponse);
+       return res.status(200).json(reponse);
+    }catch(err){
+        console.log(err);
+    }
+}
     module.exports = {
         apiTest,
         registerHandle,
+        loginHandle
     }

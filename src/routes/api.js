@@ -10,6 +10,7 @@ const router = express.Router();
 const initApiRoutes = (app) => {
     router.get("/test", apiTestController.apiTest);
     router.post("/register", apiTestController.registerHandle);
+    router.post("/login", apiTestController.loginHandle);
     return app.use("/api/v1", router);
 }
 
