@@ -1,5 +1,5 @@
 import authServices from '../services/authService.js';
-
+import userApiService from"../services/userApiService.js"
 const apiTest = (req, res) => {
     return res.status(200).json({
         message: "API is working",
@@ -33,8 +33,38 @@ const loginHandle = async (req, res) => {
         console.log(err);
     }
 }
+
+const read = async (req, res) => {
+    let data2 = await userApiService.getUserByPage(+req.query.page,+req.query.limit);
+    console.log(data2);
+    return res.status(200).json({
+       data2
+    });
+}
+
+const create = (req, res) => {
+    return res.status(200).json({
+        message: "API is working",
+    });
+}
+
+const update = (req, res) => {
+    return res.status(200).json({
+        message: "API is working",
+    });
+}
+
+const _delete = (req, res) => {
+    return res.status(200).json({
+        message: "API is working",
+    });
+}
     module.exports = {
         apiTest,
         registerHandle,
-        loginHandle
+        loginHandle,
+        read,
+        create,
+        update,
+        _delete
     }

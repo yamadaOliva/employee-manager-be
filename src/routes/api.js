@@ -11,6 +11,11 @@ const initApiRoutes = (app) => {
     router.get("/test", apiTestController.apiTest);
     router.post("/register", apiTestController.registerHandle);
     router.post("/login", apiTestController.loginHandle);
+
+    router.get("/users/read?", apiTestController.read);
+    router.post("/users/create", apiTestController.create);
+    router.put("/users/update", apiTestController.update);
+    router.delete("/users/delete", apiTestController._delete);
     return app.use("/api/v1", router);
 }
 
