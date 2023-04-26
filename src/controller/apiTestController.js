@@ -36,28 +36,54 @@ const loginHandle = async (req, res) => {
 
 const read = async (req, res) => {
     let data2 = await userApiService.getUserByPage(+req.query.page,+req.query.limit);
-    console.log(data2);
     return res.status(200).json({
        data2
     });
 }
 
-const create = (req, res) => {
-    return res.status(200).json({
-        message: "API is working",
-    });
+const create = async(req, res) => {
+    try{
+        let data =  await userApiService.createNewUser(req.body);
+        return res.status(200).json(data);
+    }catch(err){
+        console.log(err);
+        return res.status(500).json({
+            EM : "something wrong",
+            EC : -5,
+            DT : ""
+        })
+    }
 }
 
-const update = (req, res) => {
+const update = async(req, res) => {
+    try{
+    let data = await userApiService.updateUser(req.body);
     return res.status(200).json({
-        message: "API is working",
+       data
     });
+    }catch(err){
+        console.log(err);
+    }
+    
 }
 
 const _delete = (req, res) => {
-    return res.status(200).json({
-        message: "API is working",
-    });
+    try{
+        userApiService.deleteUser(req.body.id);
+        return res.status(200).json({
+            EM : "Success",
+            EC : 200,
+            DT : ""
+        });
+    }catch(err){
+        console.log(err);
+        return res.status(500).json({
+            EM : "something wrong",
+            EC : -5,
+            DT : ""
+        })
+    }
+    
 }
     module.exports = {
         apiTest,

@@ -57,6 +57,8 @@ const registerService = async (user) => {
       email: user.email,
       password: hashPassword(user.password),
       phone: user.phone,
+      sex: "female",
+      groupID: 1,
     });
     return {
       EM: "Register success",
@@ -67,12 +69,10 @@ const registerService = async (user) => {
 };
 
 const loginService = async (user) => {
-    const test = await checkEmailExist(user.email);
-    let user1 = {};
-     user1 = await findUserByEmail(user.email);
+  const test = await checkEmailExist(user.email);
+  let user1 = {};
+  user1 = await findUserByEmail(user.email);
   if (test) {
-   
-    
     if (comparePassword(user.password, user1.password)) {
       return {
         EM: "Login success",

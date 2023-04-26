@@ -6,6 +6,7 @@ import initApiRoutes from "./routes/api";
 import configCors from "./config/cors";
 require("dotenv").config();
 import bodyParser from "body-parser";
+import jwtAction from "./middleware/JWTaction";
 
 
 const app = express();
@@ -24,7 +25,6 @@ connection();
 // init all web routes
 initWebRoutes(app);
 initApiRoutes(app);
-
 app.listen(PORT,(err)=>{
     console.log("Server is running on port: " + PORT);
 });
