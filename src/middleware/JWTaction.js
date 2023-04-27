@@ -23,10 +23,26 @@ const verifyToken=(token)=>{
     }catch(err){
         console.log(err);
     }
-    console.log(data);
-    
+    return data; 
+}
+
+const checkUser = (req , res , next) =>{
+    let cookies = req.cookies;
+    console.log("cookies=>>",cookies);
+    if(cookies){
+        console.log("token=>>",cookies.token);
+        let data = verifyToken(cookies.token);
+        console.log("data=>>",data);
+    }else{
+        return res.status(401).json({
+            EM : "Unauthorized",
+            EC : -2,
+            DT : ""
+        })
+    }
 }
 module.exports = {
     CreateJWT,
-    verifyToken
+    verifyToken,
+    checkUser
 }

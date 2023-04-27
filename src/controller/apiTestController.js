@@ -25,9 +25,10 @@ const registerHandle = async (req, res) => {
 
 const loginHandle = async (req, res) => {
     try{
-    console.log(req.body);
-       const reponse = await  authServices.loginService(req.body);
-       console.log("ress ::=>>>",reponse);
+       
+       let reponse = await  authServices.loginService(req.body);
+        res.cookie("token",reponse.DT.access_token,{httpOnly:true});
+       console.log("res=>>>",reponse);
        return res.status(200).json(reponse);
     }catch(err){
         console.log(err);

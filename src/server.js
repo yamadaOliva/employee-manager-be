@@ -7,7 +7,7 @@ import configCors from "./config/cors";
 require("dotenv").config();
 import bodyParser from "body-parser";
 import jwtAction from "./middleware/JWTaction";
-
+import cookieParser from "cookie-parser";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -19,7 +19,8 @@ configCors(app);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-
+//config cookie parser
+app.use(cookieParser());
 //test connection
 connection();
 // init all web routes

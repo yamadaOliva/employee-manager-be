@@ -1,6 +1,9 @@
+require("dotenv").config();
 import db from "../models/index.js";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcryptjs"; 
+import {getGroupWithRoles} from "./JWTservice.js";
 const salt = bcrypt.genSaltSync(10);
+import {CreateJWT} from "../middleware/JWTaction.js"
 const hashPassword = (password) => {
   return bcrypt.hashSync(password, salt);
 };
@@ -19,7 +22,7 @@ const findUserByEmail = async (email) => {
       email: email,
     },
   });
-  return user;
+  return user.get({ plain: true });
 };
 
 const comparePassword = (password, hashPassword) => {
@@ -58,7 +61,7 @@ const registerService = async (user) => {
       password: hashPassword(user.password),
       phone: user.phone,
       sex: "female",
-      groupID: 1,
+      groupID: 5,
     });
     return {
       EM: "Register success",
@@ -69,15 +72,25 @@ const registerService = async (user) => {
 };
 
 const loginService = async (user) => {
+  console.log("user==>",user)
   const test = await checkEmailExist(user.email);
   let user1 = {};
   user1 = await findUserByEmail(user.email);
   if (test) {
     if (comparePassword(user.password, user1.password)) {
+      let roles =await getGroupWithRoles(user1);
+      let payload = {
+        email : user1.email,
+        roles,
+        expiresIn: process.env.JWT_EXPIRES_IN
+           }
+      let token = CreateJWT(payload)
       return {
         EM: "Login success",
         EC: 200,
-        DT: "",
+        DT: {
+            access_token : token
+        }
       };
     } else {
       return {
