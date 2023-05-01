@@ -28,12 +28,19 @@ const verifyToken=(token)=>{
 
 const checkUser = (req , res , next) =>{
     let cookies = req.cookies;
-    console.log("cookies=>>",cookies);
+    const nonCheck = ["/","/login","/register"];
+    if(nonCheck.includes(req.path)){
+        return next();
+    }
+    console.log('cookies',cookies)
     if(cookies){
-        console.log("token=>>",cookies.token);
         let data = verifyToken(cookies.token);
-        console.log("data=>>",data);
+        req.user = data;
+        if(data){
+            next();
+        }
     }else{
+        console.log('123')
         return res.status(401).json({
             EM : "Unauthorized",
             EC : -2,
@@ -41,8 +48,39 @@ const checkUser = (req , res , next) =>{
         })
     }
 }
+
+const checkPermission = (req , res , next) =>{
+    const nonCheck = ["/","/login","/register"];
+    if(nonCheck.includes(req.path)){
+        return next();
+    }
+  if(req.user){
+    let email = req.user.email;
+    let roles = req.user.roles.Roles;
+    let currentUrl = req.path;
+    console.log("roles==>",currentUrl,roles);
+    let canAccess = roles.some(item=>{
+        if(item.url==currentUrl){
+            return true;
+        }
+    })
+    console.log("canAccess==>",canAccess);
+    if(canAccess){
+        next();
+    }else{
+        console.log('1234')
+        return res.status(403).json({
+            EM : "Unauthorized",
+            EC : -3,
+            DT : ""
+        })
+    }
+  
+}
+}
 module.exports = {
     CreateJWT,
     verifyToken,
-    checkUser
+    checkUser,
+    checkPermission
 }
