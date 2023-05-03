@@ -27,26 +27,29 @@ const verifyToken=(token)=>{
 }
 
 const checkUser = (req , res , next) =>{
-    let cookies = req.cookies;
+   
     const nonCheck = ["/","/login","/register"];
+    console.log('req.path',req.path)
     if(nonCheck.includes(req.path)){
         return next();
-    }
-    console.log('cookies',cookies)
+    }else{
+    let cookies = req.cookies;
+    console.log('cookies123',cookies)
     if(cookies){
         let data = verifyToken(cookies.token);
         req.user = data;
+        req.token = cookies.token;
         if(data){
             next();
         }
     }else{
-        console.log('123')
         return res.status(401).json({
             EM : "Unauthorized",
             EC : -2,
             DT : ""
         })
     }
+}
 }
 
 const checkPermission = (req , res , next) =>{
@@ -58,13 +61,13 @@ const checkPermission = (req , res , next) =>{
     let email = req.user.email;
     let roles = req.user.roles.Roles;
     let currentUrl = req.path;
-    console.log("roles==>",currentUrl,roles);
+   
     let canAccess = roles.some(item=>{
         if(item.url==currentUrl){
             return true;
         }
     })
-    console.log("canAccess==>",canAccess);
+  
     if(canAccess){
         next();
     }else{

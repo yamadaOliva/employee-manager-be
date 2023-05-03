@@ -22,7 +22,8 @@ const findUserByEmail = async (email) => {
       email: email,
     },
   });
-  return user.get({ plain: true });
+  if(user) return user.get({ plain: true });
+  return {};
 };
 
 const comparePassword = (password, hashPassword) => {
@@ -89,7 +90,10 @@ const loginService = async (user) => {
         EM: "Login success",
         EC: 200,
         DT: {
-            access_token : token
+            access_token : token,
+            roles,
+            email:user1.email,
+            name:user1.name
         }
       };
     } else {

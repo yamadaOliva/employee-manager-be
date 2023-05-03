@@ -27,7 +27,7 @@ const loginHandle = async (req, res) => {
     try{
        
        let reponse = await  authServices.loginService(req.body);
-        res.cookie("token",reponse.DT.access_token,{httpOnly:true});
+        res.cookie("token",reponse.DT.access_token,{httpOnly:true,maxAge:1000*60*60});
        console.log("res=>>>",reponse);
        return res.status(200).json(reponse);
     }catch(err){
@@ -85,6 +85,32 @@ const _delete = (req, res) => {
         })
     }
     
+    
+}
+const getAccount = async (req, res) => {
+    console.log("req.user",req.user);
+    return res.status(200).json({
+        EM : "Success",
+        EC : 200,
+        DT : {
+            ...req.user,
+            access_token:req.token
+        }
+}
+    );
+}
+
+const logout = (req, res) => {
+    try {
+        res.clearCookie("token");
+        return res.status(200).json({
+            EM : "Success",
+            EC : 200,
+            DT : ""
+        });
+    } catch (error) {
+        console.log(error);
+    }
 }
     module.exports = {
         apiTest,
@@ -93,5 +119,7 @@ const _delete = (req, res) => {
         read,
         create,
         update,
-        _delete
+        _delete,
+        getAccount,
+        logout
     }
